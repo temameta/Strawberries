@@ -8,6 +8,39 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/user-service" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service/rest-api-contract" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service/rest-api-contract" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service/rest-api-implementation" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service/rest-api-implementation" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service/user-rest-api-contract" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service/user-rest-api-contract" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/user-service/user-rest-api-implementation" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/user-service/user-rest-api-implementation" />
           </set>
         </option>
       </GradleProjectSettings>
