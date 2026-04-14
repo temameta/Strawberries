@@ -15,9 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.strawberries.userrestapicontract.config.UserApiContractConfig;
-import org.strawberries.userrestapicontract.dto.ErrorResponse;
-import org.strawberries.userrestapicontract.dto.UserRequest;
-import org.strawberries.userrestapicontract.dto.UserResponse;
+import org.strawberries.userrestapicontract.dto.*;
 
 @Tag(name = "Users", description = "Управление пользователями")
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -74,7 +72,7 @@ public interface UserApi {
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
             Long id,
-            @Valid @RequestBody UserRequest request
+            @Valid @RequestBody UserUpdateRequest request
     );
 
     @Operation(
@@ -90,7 +88,7 @@ public interface UserApi {
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
             Long id,
-            @Valid @RequestBody UserRequest request
+            @Valid @RequestBody UserPatchRequest request
     );
 
     @Operation(
