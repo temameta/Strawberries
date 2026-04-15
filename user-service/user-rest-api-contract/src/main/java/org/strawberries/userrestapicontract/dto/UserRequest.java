@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.strawberries.userrestapicontract.validation.Phone;
 
+@Schema(description = "Запрос на создание или полное обновление пользователя")
 public record UserRequest(
     @Schema(description = "Email пользователя", example = "example@gmail.com")
     @Email(message = "Некорректный email")
