@@ -1,2 +1,4 @@
 rootProject.name = 'Strawberries'
-include 'user-service'
+
+include ':user-service:user-rest-api-contract'
+include ':user-service:user-rest-api-implementation'
