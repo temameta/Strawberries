@@ -17,6 +17,7 @@ public record UserRequest(
     String firstName,
     @Schema(description = "Номер телефона пользователя", example = "+79998886655", requiredMode = Schema.RequiredMode.REQUIRED)
     @Phone
+    @NotBlank(message = "Номер телефона не может быть пустым")
     String phone,
     @Schema(description = "Роль пользователя", example = "USER")
     Role role
