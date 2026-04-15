@@ -72,7 +72,7 @@ public interface UserApi {
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
             Long id,
-            @Valid @RequestBody UserUpdateRequest request
+            @Valid @RequestBody UserRequest request
     );
 
     @Operation(
