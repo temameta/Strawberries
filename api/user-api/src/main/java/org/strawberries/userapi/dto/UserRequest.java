@@ -23,7 +23,5 @@ public record UserRequest(
     @Schema(description = "Пароль пользователя", example = "123456")
     @NotBlank(message = "Пароль не может быть пустым")
     @Size(max = 255, message = "Пароль не может превышать 255 символов")
-    String password,
-    @Schema(description = "Роль пользователя", example = "USER")
-    Role role
+    String password
 ) {}
