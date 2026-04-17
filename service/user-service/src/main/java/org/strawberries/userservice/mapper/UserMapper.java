@@ -1,8 +1,7 @@
 package org.strawberries.userservice.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingConstants;
+import org.mapstruct.*;
+import org.strawberries.userapi.dto.UserPatchRequest;
 import org.strawberries.userapi.dto.UserRequest;
 import org.strawberries.userapi.dto.UserResponse;
 import org.strawberries.userservice.entity.User;
@@ -18,4 +17,9 @@ public interface UserMapper {
     @Mapping(target = "isActive", constant = "true")
     @Mapping(target = "role", constant = "USER")
     User toEntity(UserRequest request);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void patch(UserPatchRequest request, @MappingTarget User user);
+
+    void update(UserRequest request, @MappingTarget User user);
 }
