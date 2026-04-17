@@ -13,6 +13,8 @@ public record ErrorResponse(
         int status,
         @Schema(description = "URI-идентификатор типа ошибки", example = "https://api.example.com/problems/resource-not-found")
         String type,
+        @Schema(description = "Краткое человекочитаемое название типа ошибки", example = "Ресурс не найден")
+        String title,
         @Schema(description = "Краткое название типа ошибки", example = "Ресурс не найден")
         String detail,
         @Schema(description = "URI запроса, приведшего к ошибке", example = "/api/users/42")
