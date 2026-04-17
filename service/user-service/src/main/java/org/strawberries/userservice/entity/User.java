@@ -1,9 +1,7 @@
 package org.strawberries.userservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -17,6 +15,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -30,6 +30,7 @@ public class User {
     @Column(nullable = false)
     private String passwordHash;
     @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
     private Role role;
     @Column(nullable = false)
     private boolean isActive;
