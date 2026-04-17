@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.strawberries.userrestapicontract.config.UserApiContractConfig;
 import org.strawberries.userrestapicontract.dto.*;
 
+import java.util.UUID;
+
 @Tag(name = "Users", description = "Управление пользователями")
 @RequestMapping(value = "/api/users", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface UserApi {
@@ -46,7 +48,7 @@ public interface UserApi {
     EntityModel<UserResponse> getUserById(
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
-            Long id
+            UUID id
     );
 
     @Operation(

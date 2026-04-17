@@ -8,6 +8,8 @@ import org.strawberries.userrestapicontract.dto.UserRequest;
 import org.strawberries.userrestapicontract.dto.UserResponse;
 import org.strawberries.userrestapicontract.endpoints.UserApi;
 
+import java.util.UUID;
+
 public class UserController implements UserApi {
     @Override
     public PagedModel<EntityModel<UserResponse>> getAllUsers(int page, int size) {
@@ -15,7 +17,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public EntityModel<UserResponse> getUserById(Long id) {
+    public EntityModel<UserResponse> getUserById(UUID id) {
         return null;
     }
 

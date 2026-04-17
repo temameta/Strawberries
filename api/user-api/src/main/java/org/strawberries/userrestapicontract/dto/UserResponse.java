@@ -8,6 +8,7 @@ import lombok.Getter;
 import org.springframework.hateoas.server.core.Relation;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @Schema(description = "Информация о пользователе")
 public class UserResponse {
     @Schema(description = "ID пользователя", example = "1")
-    private final Long id;
+    private final UUID id;
     @Schema(description = "Email пользователя", example = "example@gmail.com")
     private final String email;
     @Schema(description = "Имя пользователя", example = "Иван")
