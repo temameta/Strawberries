@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
+@Table(name = "users")
 @EntityListeners(AuditingEntityListener.class)
 @Builder
 @NoArgsConstructor
@@ -23,9 +24,9 @@ public class User {
     private UUID id;
     @Column(nullable = false)
     private String firstName;
-    @Column(unique = true)
+    @Column
     private String email;
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String phone;
     @Column(nullable = false)
     private String passwordHash;
