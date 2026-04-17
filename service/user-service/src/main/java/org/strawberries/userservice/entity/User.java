@@ -23,7 +23,7 @@ public class User {
     private UUID id;
     @Column(nullable = false)
     private String firstName;
-    @Column
+    @Column(unique = true)
     private String email;
     @Column(unique = true, nullable = false)
     private String phone;
