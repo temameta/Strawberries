@@ -14,4 +14,5 @@ public interface UserService {
     UserResponse update(UUID id, UserRequest request);
     UserResponse patch(UUID id, UserPatchRequest request);
     UserResponse delete(UUID id);
+    UserResponse restore(UUID id);
 }

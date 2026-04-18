@@ -97,10 +97,18 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponse delete(UUID id) {
-        User user = repository.findById(id)
-                .filter(User::isActive)
+        User user = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.setActive(false);
+        return mapper.toResponse(repository.save(user));
+    }
+
+    @Override
+    @Transactional
+    public UserResponse restore(UUID id) {
+        User user = repository.findByIdAndActiveFalse(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+        user.setActive(true);
         return mapper.toResponse(repository.save(user));
     }
 }
