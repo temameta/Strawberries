@@ -100,9 +100,11 @@ public interface UserApi {
     @ApiResponse(responseCode = "200", description = "Пользователь удален")
     @ApiResponse(responseCode = "404", description = "Пользователь не найден", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @DeleteMapping("/{id}")
-    void deleteUserById(
+    EntityModel<UserResponse> deleteUserById(
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
             UUID id
     );
+
+
 }

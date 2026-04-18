@@ -96,11 +96,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void delete(UUID id) {
+    public UserResponse delete(UUID id) {
         User user = repository.findById(id)
                 .filter(User::isActive)
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.setActive(false);
-        repository.save(user);
+        return mapper.toResponse(repository.save(user));
     }
 }

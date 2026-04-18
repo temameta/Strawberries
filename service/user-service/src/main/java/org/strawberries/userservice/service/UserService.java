@@ -13,5 +13,5 @@ public interface UserService {
     UserResponse findById(UUID id, boolean onlyActive);
     UserResponse update(UUID id, UserRequest request);
     UserResponse patch(UUID id, UserPatchRequest request);
-    void delete(UUID id);
+    UserResponse delete(UUID id);
 }

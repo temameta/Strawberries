@@ -62,7 +62,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public void deleteUserById(UUID id) {
-        service.delete(id);
+    public EntityModel<UserResponse> deleteUserById(UUID id) {
+        return modelAssembler.toModel(service.delete(id));
     }
 }
