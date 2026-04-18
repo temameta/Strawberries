@@ -19,7 +19,6 @@ import org.strawberries.userservice.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,8 +29,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public UserResponse create(UserRequest request) {
-        if (request.email() != null && repository.existsByEmailAndIsActiveTrue(request.email())) throw new AttributeAlreadyExistsException("email", request.email());
-        if (repository.existsByPhoneAndIsActiveTrue(request.phone())) throw new AttributeAlreadyExistsException("phone", request.phone());
+        if (request.email() != null && repository.existsByEmailAndActiveTrue(request.email())) throw new AttributeAlreadyExistsException("email", request.email());
+        if (repository.existsByPhoneAndActiveTrue(request.phone())) throw new AttributeAlreadyExistsException("phone", request.phone());
         User newUser = mapper.toEntity(request);
         // ВРЕМЕННО
         newUser.setPasswordHash(request.password() + "_HASH");
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public PagedResponse<UserResponse> findAll(int page, int size, Boolean isActive) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<User> userPage = isActive == null ? repository.findAll(pageable) : repository.findAllByIsActive(pageable, isActive);
+        Page<User> userPage = isActive == null ? repository.findAll(pageable) : repository.findAllByActive(pageable, isActive);
         List<UserResponse> content = userPage.getContent().stream()
                 .map(mapper::toResponse)
                 .toList();
@@ -59,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserResponse findById(UUID id, boolean onlyActive) {
-        Optional<User> user = onlyActive ? repository.findByIdAndIsActiveTrue(id) : repository.findById(id);
+        Optional<User> user = onlyActive ? repository.findByIdAndActiveTrue(id) : repository.findById(id);
         if (user.isEmpty()) throw new UserNotFoundException(id);
         return mapper.toResponse(user.get());
     }
@@ -70,9 +69,9 @@ public class UserServiceImpl implements UserService {
         User user = repository.findById(id)
                 .filter(User::isActive)
                 .orElseThrow(() -> new UserNotFoundException(id));
-        if (!user.getEmail().equals(request.email()) && repository.existsByEmailAndIsActiveTrue(request.email()))
+        if (!user.getEmail().equals(request.email()) && repository.existsByEmailAndActiveTrue(request.email()))
             throw new AttributeAlreadyExistsException("email", request.email());
-        if (!user.getPhone().equals(request.phone()) && repository.existsByPhoneAndIsActiveTrue(request.phone()))
+        if (!user.getPhone().equals(request.phone()) && repository.existsByPhoneAndActiveTrue(request.phone()))
             throw new AttributeAlreadyExistsException("phone", request.phone());
         mapper.update(request, user);
         user.setPasswordHash(request.password() + "_HASH");
@@ -86,10 +85,10 @@ public class UserServiceImpl implements UserService {
                 .filter(User::isActive)
                 .orElseThrow(() -> new UserNotFoundException(id));
         if (request.email() != null && !request.email().equals(user.getEmail()))
-            if (repository.existsByEmailAndIsActiveTrue(request.email()))
+            if (repository.existsByEmailAndActiveTrue(request.email()))
                 throw new AttributeAlreadyExistsException("email", request.email());
         if (request.phone() != null && !request.phone().equals(user.getPhone()))
-            if (repository.existsByPhoneAndIsActiveTrue(request.phone()))
+            if (repository.existsByPhoneAndActiveTrue(request.phone()))
                 throw new AttributeAlreadyExistsException("phone", request.phone());
         mapper.patch(request, user);
         return mapper.toResponse(repository.save(user));

@@ -11,8 +11,8 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    Page<User> findAllByIsActive(Pageable pageable, boolean isActive);
-    Optional<User> findByIdAndIsActiveTrue(UUID id);
-    boolean existsByEmailAndIsActiveTrue(String email);
-    boolean existsByPhoneAndIsActiveTrue(String phone);
+    Page<User> findAllByActive(Pageable pageable, boolean isActive);
+    Optional<User> findByIdAndActiveTrue(UUID id);
+    boolean existsByEmailAndActiveTrue(String email);
+    boolean existsByPhoneAndActiveTrue(String phone);
 }
