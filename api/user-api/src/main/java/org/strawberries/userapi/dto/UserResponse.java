@@ -28,7 +28,7 @@ public class UserResponse {
     @Schema(description = "Роль пользователя", example = "USER")
     private Role role;
     @Schema(description = "Активен пользователь или нет (неактивен = удален)", example = "true")
-    private boolean isActive;
+    private boolean active;
     @Schema(description = "Дата создания пользователя", example = "2007-12-03T10:15:30")
     private LocalDateTime createdAt;
     @Schema(description = "Дата последнего изменения пользователя", example = "2007-12-03T10:15:30.")

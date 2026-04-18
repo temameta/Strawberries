@@ -34,7 +34,7 @@ public class User {
     @Enumerated(value = EnumType.STRING)
     private Role role;
     @Column(nullable = false)
-    private boolean isActive;
+    private boolean active;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;

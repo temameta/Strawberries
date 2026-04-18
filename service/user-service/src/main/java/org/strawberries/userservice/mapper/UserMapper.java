@@ -14,7 +14,7 @@ public interface UserMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
-    @Mapping(target = "isActive", constant = "true")
+    @Mapping(target = "active", constant = "true")
     @Mapping(target = "role", constant = "USER")
     User toEntity(UserRequest request);
 
