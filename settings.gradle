@@ -1,5 +1,6 @@
 rootProject.name = 'Strawberries'
 
 include ':api:user-api'
+include ':api:product-api'
 
 include ':service:user-service'

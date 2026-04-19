@@ -1,0 +1,43 @@
+type Category {
+    id: ID!
+    name: String!
+    description: String
+    parent: Category
+    subcategories: CategoryCollection
+    products(page: Int = 0, size: Int = 20): ProductCollection!
+    createdAt: DateTime
+    updatedAt: DateTime
+}
+
+type CategoryCollection {
+    content: [Category!]!
+    pageInfo: PageInfo!
+    totalElements: Int!
+}
+
+input CreateCategoryInput {
+    name: String!
+    description: String
+    parent: ID
+}
+
+input UpdateCategoryInput {
+    name: String
+    description: String
+}
+
+input CategoryFilter {
+    parent: ID
+    nameSearch: String
+}
+
+extend type Query {
+    category(id: ID!): Category
+    categories(filter: CategoryFilter): CategoryCollection
+}
+
+extend type Mutation {
+    createCategory(input: CreateCategoryInput!): Category!
+    updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
+    deleteCategory(id: ID!): Category!
+}

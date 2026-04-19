@@ -1,0 +1,14 @@
+scalar Date
+scalar DateTime
+scalar Decimal
+
+type PageInfo {
+    pageNumber: Int!
+    pageSize: Int!
+    totalPages: Int!
+    last: Boolean!
+}
+
+type Query {}
+
+type Mutation {}
