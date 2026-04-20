@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product extends AuditableEntity {
+public class ProductEntity extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -30,5 +30,5 @@ public class Product extends AuditableEntity {
     @Column
     private String imageUrl;
     @ManyToOne
-    private Category category;
+    private CategoryEntity category;
 }
