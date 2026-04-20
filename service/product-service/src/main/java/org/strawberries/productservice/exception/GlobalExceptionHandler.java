@@ -6,6 +6,7 @@ import graphql.execution.DataFetcherExceptionHandlerParameters;
 import graphql.execution.DataFetcherExceptionHandlerResult;
 import org.springframework.stereotype.Component;
 
+import java.util.NoSuchElementException;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -18,21 +19,8 @@ public class GlobalExceptionHandler implements DataFetcherExceptionHandler {
         Throwable exception = handlerParameters.getException();
 
         // Ресурс не найден — аналог HTTP 404
-        if (exception instanceof ResourceNotFoundException) {
+        if (exception instanceof NoSuchElementException) {
             var error = TypedGraphQLError.newNotFoundBuilder()
-                    .message(exception.getMessage())
-                    .path(handlerParameters.getPath())
-                    .build();
-
-            return CompletableFuture.completedFuture(
-                    DataFetcherExceptionHandlerResult.newResult()
-                            .error(error)
-                            .build());
-        }
-
-        // Конфликт ISBN — аналог HTTP 409
-        if (exception instanceof IsbnAlreadyExistsException) {
-            var error = TypedGraphQLError.newConflictBuilder()
                     .message(exception.getMessage())
                     .path(handlerParameters.getPath())
                     .build();
