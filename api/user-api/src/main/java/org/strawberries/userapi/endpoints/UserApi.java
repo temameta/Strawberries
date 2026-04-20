@@ -112,7 +112,7 @@ public interface UserApi {
     )
     @ApiResponse(responseCode = "200", description = "Пользователь восстановлен")
     @ApiResponse(responseCode = "404", description = "Пользователь не найден", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @DeleteMapping("/{id}")
+    @PostMapping("/{id}")
     EntityModel<UserResponse> restoreUserById(
             @Parameter(description = "ID пользователя", required = true, example = "1")
             @PathVariable
