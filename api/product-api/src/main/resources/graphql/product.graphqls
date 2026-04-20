@@ -1,5 +1,5 @@
 type Product {
-    id: ID!
+    id: UUID!
     name: String!
     description: String
     price: Decimal!
@@ -23,7 +23,7 @@ input CreateProductInput {
     price: Decimal!
     quantity: Int!
     imageUrl: String
-    category: ID!
+    category: UUID!
 }
 
 input UpdateProductInput {
@@ -32,23 +32,23 @@ input UpdateProductInput {
     price: Decimal
     quantity: Int
     imageUrl: String
-    category: ID
+    category: UUID
 }
 
 input ProductFilter {
     nameSearch: String
-    category: ID
+    category: UUID
     minPrice: Int
     maxPrice: Int
 }
 
 extend type Query {
-    product(id: ID!): Product
+    product(id: UUID!): Product
     products(filter: ProductFilter, page: Int = 0, size: Int = 20): ProductCollection
 }
 
 extend type Mutation {
     createProduct(input: CreateProductInput!): Product!
-    updateProduct(id: ID!, input: UpdateProductInput!): Product!
-    deleteProduct(id: ID!): Product
+    updateProduct(id: UUID!, input: UpdateProductInput!): Product!
+    deleteProduct(id: UUID!): Product
 }

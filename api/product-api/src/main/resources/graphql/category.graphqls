@@ -1,5 +1,5 @@
 type Category {
-    id: ID!
+    id: UUID!
     name: String!
     description: String
     parent: Category
@@ -18,7 +18,7 @@ type CategoryCollection {
 input CreateCategoryInput {
     name: String!
     description: String
-    parent: ID
+    parent: UUID
 }
 
 input UpdateCategoryInput {
@@ -27,17 +27,17 @@ input UpdateCategoryInput {
 }
 
 input CategoryFilter {
-    parent: ID
+    parent: UUID
     nameSearch: String
 }
 
 extend type Query {
-    category(id: ID!): Category
+    category(id: UUID!): Category
     categories(filter: CategoryFilter): CategoryCollection
 }
 
 extend type Mutation {
     createCategory(input: CreateCategoryInput!): Category!
-    updateCategory(id: ID!, input: UpdateCategoryInput!): Category!
-    deleteCategory(id: ID!): Category!
+    updateCategory(id: UUID!, input: UpdateCategoryInput!): Category!
+    deleteCategory(id: UUID!): Category!
 }
