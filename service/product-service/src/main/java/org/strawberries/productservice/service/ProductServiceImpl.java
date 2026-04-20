@@ -61,16 +61,26 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product update(UUID id, UpdateProductInput input) {
-        return null;
+        ProductEntity product = repository.findByIdAndActiveTrue(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
+        mapper.updateEntity(input, product);
+        return mapper.toGqlType(repository.save(product));
     }
 
     @Override
     public Product delete(UUID id) {
-        return null;
+        ProductEntity product = repository.findByIdAndActiveTrue(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
+        product.setActive(false);
+        return mapper.toGqlType(product);
+
     }
 
     @Override
     public Product restore(UUID id) {
-        return null;
+        ProductEntity product = repository.findByIdAndActiveTrue(id)
+                .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
+        product.setActive(true);
+        return mapper.toGqlType(product);
     }
 }
