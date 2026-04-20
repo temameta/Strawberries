@@ -12,7 +12,7 @@ public interface CategoryService {
     Category create(CreateCategoryInput input);
     CategoryCollection findAll(int page, int size, Boolean active);
     Category findById(UUID id, boolean onlyActive);
-    CategoryEntity getEntityById(UUID id, boolean onlyActive);
+    CategoryEntity getEntityById(UUID id);
     Category update(UUID id, UpdateCategoryInput input);
     Category delete(UUID id);
     Category restore(UUID id);
