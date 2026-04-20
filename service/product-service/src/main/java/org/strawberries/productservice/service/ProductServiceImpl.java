@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product create(CreateProductInput input) {
         ProductEntity newProduct = mapper.toEntityFromCreate(input);
-        newProduct.setCategory(categoryService.getEntityById(input.getCategory(), true));
+        newProduct.setCategory(categoryService.getEntityById(input.getCategory()));
         return mapper.toGqlType(newProduct);
     }
 
@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Product findById(UUID id, boolean onlyActive) {
         Optional<ProductEntity> product = onlyActive ? repository.findByIdAndActiveTrue(id) : repository.findById(id);
         if (product.isEmpty()) throw new NoSuchElementException(String.format("Product with id %s not found", id));
@@ -60,6 +61,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product update(UUID id, UpdateProductInput input) {
         ProductEntity product = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
@@ -68,19 +70,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    @Transactional
     public Product delete(UUID id) {
         ProductEntity product = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
         product.setActive(false);
-        return mapper.toGqlType(product);
+        return mapper.toGqlType(repository.save(product));
 
     }
 
     @Override
+    @Transactional
     public Product restore(UUID id) {
-        ProductEntity product = repository.findByIdAndActiveTrue(id)
+        ProductEntity product = repository.findByIdAndActiveFalse(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
         product.setActive(true);
-        return mapper.toGqlType(product);
+        return mapper.toGqlType(repository.save(product));
     }
 }
