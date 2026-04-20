@@ -20,6 +20,8 @@ public class CategoryEntity extends AuditableEntity {
     private String name;
     @Column
     private String description;
+    @Column(nullable = false)
+    private boolean active;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
     private CategoryEntity parent;

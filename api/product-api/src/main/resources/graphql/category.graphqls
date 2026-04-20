@@ -2,6 +2,7 @@ type Category {
     id: UUID!
     name: String!
     description: String
+    active: Boolean!
     parent: Category
     subcategories: CategoryCollection
     products(page: Int = 0, size: Int = 20): ProductCollection!
