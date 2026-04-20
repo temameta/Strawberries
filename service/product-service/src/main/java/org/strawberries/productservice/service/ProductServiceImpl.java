@@ -20,15 +20,15 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository repository;
-    private final ProductMapper productMapper;
+    private final ProductMapper mapper;
     private final CategoryService categoryService;
 
     @Transactional
     @Override
     public Product create(CreateProductInput input) {
-        ProductEntity newProduct = productMapper.toEntityFromCreate(input);
+        ProductEntity newProduct = mapper.toEntityFromCreate(input);
         newProduct.setCategory(categoryService.getEntityById(input.getCategory(), true));
-        return productMapper.toGqlType(newProduct);
+        return mapper.toGqlType(newProduct);
     }
 
     @Transactional(readOnly = true)
@@ -37,7 +37,7 @@ public class ProductServiceImpl implements ProductService {
         Pageable pageable = PageRequest.of(page, size);
         Page<ProductEntity> productPage = active == null ? repository.findAll(pageable) : repository.findAllByActive(pageable, active);
         List<Product> content = productPage.getContent().stream()
-                .map(productMapper::toGqlType)
+                .map(mapper::toGqlType)
                 .toList();
         PageInfo pageInfo = PageInfo.newBuilder()
                 .last(productPage.isLast())
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(UUID id, boolean onlyActive) {
         Optional<ProductEntity> product = onlyActive ? repository.findByIdAndActiveTrue(id) : repository.findById(id);
         if (product.isEmpty()) throw new NoSuchElementException(String.format("Product with id %s not found", id));
-        return productMapper.toGqlType(product.get());
+        return mapper.toGqlType(product.get());
     }
 
     @Override
