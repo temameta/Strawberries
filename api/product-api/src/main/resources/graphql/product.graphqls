@@ -51,4 +51,5 @@ extend type Mutation {
     createProduct(input: CreateProductInput!): Product!
     updateProduct(id: UUID!, input: UpdateProductInput!): Product!
     deleteProduct(id: UUID!): Product
+    restoreProduct(id: ID!): Product!
 }
