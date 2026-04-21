@@ -38,7 +38,7 @@ generateJava {
     packageName = 'org.strawberries.productapi.codegen'
     generateClient = true
     typeMapping = [
-            "UUID": "java.util.UUID",
+            "ID": "java.util.UUID",
             "DateTime": "java.time.LocalDateTime",
             "Decimal": "java.math.BigDecimal"
     ]
