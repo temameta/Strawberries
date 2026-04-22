@@ -28,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     public Product create(CreateProductInput input) {
         ProductEntity newProduct = mapper.toEntityFromCreate(input);
         newProduct.setCategory(categoryService.getEntityById(input.getCategory()));
-        return mapper.toGqlType(newProduct);
+        return mapper.toGqlType(repository.save(newProduct));
     }
 
     @Transactional(readOnly = true)
@@ -52,7 +52,7 @@ public class ProductServiceImpl implements ProductService {
         return ProductCollection.newBuilder()
                 .content(content)
                 .pageInfo(pageInfo)
-                .totalElements(productPage.getNumberOfElements())
+                .totalElements(productPage.getTotalElements())
                 .build();
     }
 
@@ -70,6 +70,8 @@ public class ProductServiceImpl implements ProductService {
         ProductEntity product = repository.findByIdAndActiveTrue(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
         mapper.updateEntity(input, product);
+        if (input.getCategory() != null)
+            product.setCategory(categoryService.getEntityById(input.getCategory()));
         return mapper.toGqlType(repository.save(product));
     }
 
