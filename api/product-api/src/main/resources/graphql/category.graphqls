@@ -4,8 +4,8 @@ type Category {
     description: String
     active: Boolean!
     parent: Category
-    subcategories: CategoryCollection
-    products(page: Int = 0, size: Int = 20): ProductCollection!
+    subcategories: [Category!]!
+    products(page: Int = 0, size: Int = 20): ProductCollection
     createdAt: DateTime
     updatedAt: DateTime
 }
