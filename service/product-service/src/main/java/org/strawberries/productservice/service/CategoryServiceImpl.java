@@ -18,7 +18,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository repository;
     private final CategoryMapper mapper;
 
@@ -43,15 +43,24 @@ public class CategoryServiceImpl implements CategoryService{
                 .toList();
         PageInfo pageInfo = PageInfo.newBuilder()
                 .last(categoryPage.isLast())
-                .pageNumber(page)
+                .pageNumber(categoryPage.getNumber())
                 .totalPages(categoryPage.getTotalPages())
-                .pageSize(size)
+                .pageSize(categoryPage.getSize())
                 .build();
         return CategoryCollection.newBuilder()
                 .content(content)
                 .pageInfo(pageInfo)
                 .totalElements(categoryPage.getNumberOfElements())
                 .build();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Category> getSubCategories(UUID parentId) {
+        List<CategoryEntity> categoryPage = repository.findAllByParent_IdAndActiveTrue(parentId);
+        return repository.findAllByParent_IdAndActiveTrue(parentId).stream()
+                .map(mapper::toGqlType)
+                .toList();
     }
 
     @Override
