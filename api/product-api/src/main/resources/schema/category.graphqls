@@ -13,7 +13,7 @@ type Category {
 type CategoryCollection {
     content: [Category!]!
     pageInfo: PageInfo!
-    totalElements: Int!
+    totalElements: Long!
 }
 
 input CreateCategoryInput {
@@ -34,7 +34,7 @@ input CategoryFilter {
 
 extend type Query {
     category(id: ID!): Category
-    categories(filter: CategoryFilter): CategoryCollection
+    categories(filter: CategoryFilter, page: Int = 0, size: Int = 20): CategoryCollection
 }
 
 extend type Mutation {

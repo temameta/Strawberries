@@ -2,7 +2,7 @@ type Product {
     id: ID!
     name: String!
     description: String
-    price: Decimal!
+    price: BigDecimal!
     quantity: Int!
     active: Boolean
     imageUrl: String
@@ -14,13 +14,13 @@ type Product {
 type ProductCollection {
     content: [Product!]!
     pageInfo: PageInfo!
-    totalElements: Int!
+    totalElements: Long!
 }
 
 input CreateProductInput {
     name: String!
     description: String
-    price: Decimal!
+    price: BigDecimal!
     quantity: Int!
     imageUrl: String
     category: ID!
@@ -29,7 +29,7 @@ input CreateProductInput {
 input UpdateProductInput {
     name: String
     description: String
-    price: Decimal
+    price: BigDecimal
     quantity: Int
     imageUrl: String
     category: ID
