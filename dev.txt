@@ -1,0 +1,1 @@
+docker run --name products-bd-dev -p 5433:5432 -e POSTGRES_USER=products-db-username -e POSTGRES_PASSWORD=products-db-password -e POSTGRES_DB=product-service -d postgres:18.3
