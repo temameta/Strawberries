@@ -8,6 +8,7 @@ import org.strawberries.productservice.entity.ProductEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface ProductMapper {
+    @Mapping(target = "category.id", source = "category.id")
     Product toGqlType(ProductEntity entity);
 
     @Mapping(target = "id", ignore = true)
