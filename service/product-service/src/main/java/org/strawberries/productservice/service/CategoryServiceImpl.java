@@ -50,14 +50,13 @@ public class CategoryServiceImpl implements CategoryService {
         return CategoryCollection.newBuilder()
                 .content(content)
                 .pageInfo(pageInfo)
-                .totalElements(categoryPage.getNumberOfElements())
+                .totalElements(categoryPage.getTotalElements())
                 .build();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Category> getSubCategories(UUID parentId) {
-        List<CategoryEntity> categoryPage = repository.findAllByParent_IdAndActiveTrue(parentId);
         return repository.findAllByParent_IdAndActiveTrue(parentId).stream()
                 .map(mapper::toGqlType)
                 .toList();
