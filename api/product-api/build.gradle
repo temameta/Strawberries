@@ -34,11 +34,13 @@ dependencyManagement {
 }
 
 generateJava {
-    schemaPaths = ["${projectDir}/src/main/resources/graphql"]
+    schemaPaths = ["${projectDir}/src/main/resources/schema"]
     packageName = 'org.strawberries.productapi.codegen'
     generateClient = true
     typeMapping = [
             "ID": "java.util.UUID",
-            "Decimal": "java.math.BigDecimal"
+            "BigDecimal": "java.math.BigDecimal",
+            "Long": "java.lang.Long",
+            "DateTime": "java.time.OffsetDateTime"
     ]
 }
