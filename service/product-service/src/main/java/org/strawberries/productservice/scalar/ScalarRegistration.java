@@ -12,6 +12,7 @@ public class ScalarRegistration {
         return builder
                 .scalar(ExtendedScalars.GraphQLBigDecimal)
                 .scalar(ExtendedScalars.UUID)
-                .scalar(ExtendedScalars.DateTime);
+                .scalar(ExtendedScalars.DateTime)
+                .scalar(ExtendedScalars.GraphQLLong);
     }
 }
