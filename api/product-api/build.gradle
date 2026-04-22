@@ -39,7 +39,6 @@ generateJava {
     generateClient = true
     typeMapping = [
             "ID": "java.util.UUID",
-            "DateTime": "java.time.LocalDateTime",
             "Decimal": "java.math.BigDecimal"
     ]
 }
