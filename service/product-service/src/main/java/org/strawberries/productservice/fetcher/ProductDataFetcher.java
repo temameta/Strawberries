@@ -4,10 +4,7 @@ import com.netflix.graphql.dgs.DgsComponent;
 import com.netflix.graphql.dgs.DgsMutation;
 import com.netflix.graphql.dgs.DgsQuery;
 import com.netflix.graphql.dgs.InputArgument;
-import org.strawberries.productapi.codegen.types.CreateProductInput;
-import org.strawberries.productapi.codegen.types.Product;
-import org.strawberries.productapi.codegen.types.ProductCollection;
-import org.strawberries.productapi.codegen.types.UpdateProductInput;
+import org.strawberries.productapi.codegen.types.*;
 import org.strawberries.productservice.service.ProductService;
 
 import java.util.Objects;
@@ -22,6 +19,7 @@ public record ProductDataFetcher(ProductService service) {
 
     @DgsQuery
     public ProductCollection products(
+            @InputArgument ProductFilter filter,
             @InputArgument Integer page,
             @InputArgument Integer size) {
         page = Objects.requireNonNullElse(page, 0);
