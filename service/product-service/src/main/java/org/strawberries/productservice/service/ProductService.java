@@ -9,9 +9,14 @@ import java.util.UUID;
 
 public interface ProductService {
     Product create(CreateProductInput input);
-    ProductCollection findAll(int page, int size, Boolean active);
+
+    ProductCollection findAll(int page, int size, Boolean active, UUID categoryId);
+
     Product findById(UUID id, boolean onlyActive);
+
     Product update(UUID id, UpdateProductInput input);
+
     Product delete(UUID id);
+
     Product restore(UUID id);
 }

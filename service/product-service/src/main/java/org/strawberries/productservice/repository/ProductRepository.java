@@ -13,6 +13,10 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<ProductEntity, UUID> {
     Page<ProductEntity> findAllByActive(Pageable pageable, Boolean active);
 
+    Page<ProductEntity> findAllByCategory_IdAndActive(Pageable pageable, UUID id, Boolean active);
+
+    Page<ProductEntity> findAllByCategory_Id(Pageable pageable, UUID id);
+
     Optional<ProductEntity> findByIdAndActiveTrue(UUID id);
 
     Optional<ProductEntity> findByIdAndActiveFalse(UUID id);

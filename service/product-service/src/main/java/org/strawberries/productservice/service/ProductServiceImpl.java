@@ -33,17 +33,21 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional(readOnly = true)
     @Override
-    public ProductCollection findAll(int page, int size, Boolean active) {
+    public ProductCollection findAll(int page, int size, Boolean active, UUID categoryId) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<ProductEntity> productPage = active == null ? repository.findAll(pageable) : repository.findAllByActive(pageable, active);
+        Page<ProductEntity> productPage;
+        if (categoryId == null)
+            productPage = active == null ? repository.findAll(pageable) : repository.findAllByActive(pageable, active);
+        else
+            productPage = active == null ? repository.findAllByCategory_Id(pageable, categoryId) : repository.findAllByCategory_IdAndActive(pageable, categoryId, active);
         List<Product> content = productPage.getContent().stream()
                 .map(mapper::toGqlType)
                 .toList();
         PageInfo pageInfo = PageInfo.newBuilder()
                 .last(productPage.isLast())
-                .pageNumber(page)
+                .pageNumber(productPage.getNumber())
                 .totalPages(productPage.getTotalPages())
-                .pageSize(size)
+                .pageSize(productPage.getSize())
                 .build();
         return ProductCollection.newBuilder()
                 .content(content)
