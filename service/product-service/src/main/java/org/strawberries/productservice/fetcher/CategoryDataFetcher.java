@@ -1,10 +1,7 @@
 package org.strawberries.productservice.fetcher;
 
 import com.netflix.graphql.dgs.*;
-import org.strawberries.productapi.codegen.types.Category;
-import org.strawberries.productapi.codegen.types.CategoryCollection;
-import org.strawberries.productapi.codegen.types.CreateCategoryInput;
-import org.strawberries.productapi.codegen.types.UpdateCategoryInput;
+import org.strawberries.productapi.codegen.types.*;
 import org.strawberries.productservice.service.CategoryService;
 
 import java.util.List;
@@ -20,6 +17,7 @@ public record CategoryDataFetcher(CategoryService service) {
 
     @DgsQuery
     public CategoryCollection categories(
+            @InputArgument CategoryFilter filter,
             @InputArgument Integer page,
             @InputArgument Integer size) {
         page = Objects.requireNonNullElse(page, 0);
@@ -48,11 +46,5 @@ public record CategoryDataFetcher(CategoryService service) {
     @DgsMutation
     public Category restoreCategory(@InputArgument UUID id) {
         return service.restore(id);
-    }
-
-    @DgsData(parentType = "Category")
-    public List<Category> subCategories(DgsDataFetchingEnvironment dfe) {
-        Category parent = Objects.requireNonNull(dfe.getSource(), "Source category cannot be null");
-        return service.getSubCategories(parent.getId());
     }
 }
