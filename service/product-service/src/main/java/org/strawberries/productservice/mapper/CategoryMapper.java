@@ -8,14 +8,12 @@ import org.strawberries.productservice.entity.CategoryEntity;
 
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING)
 public interface CategoryMapper {
+    @Mapping(target = "products", ignore = true)
     Category toGqlType(CategoryEntity entity);
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "active", constant = "true")
-    @Mapping(target = "subCategories", constant = "null")
-    @Mapping(target = "products", constant = "null")
+    @Mapping(target = "parent", ignore = true)
     CategoryEntity toEntityFromCreate(CreateCategoryInput input);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
