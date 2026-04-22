@@ -7,11 +7,13 @@ import org.strawberries.productapi.codegen.types.Category;
 import org.strawberries.productapi.codegen.types.Product;
 import org.strawberries.productservice.service.CategoryService;
 
+import java.util.Objects;
+
 @DgsComponent
 public record ProductCategoryDataFetcher(CategoryService service) {
     @DgsData(parentType = "Product")
     public Category category(DgsDataFetchingEnvironment dfe) {
-        Product product = dfe.getSource();
-        return service.findById();
+        Product product = Objects.requireNonNull(dfe.getSource(), "Source product cannot be null");
+        return service.findById(product.getCategory().getId(), true);
     }
 }

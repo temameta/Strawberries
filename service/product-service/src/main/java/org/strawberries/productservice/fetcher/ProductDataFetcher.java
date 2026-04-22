@@ -26,7 +26,7 @@ public record ProductDataFetcher(ProductService service) {
             @InputArgument Integer size) {
         page = Objects.requireNonNullElse(page, 0);
         size = Objects.requireNonNullElse(size, 20);
-        return service.findAll(page, size, true);
+        return service.findAll(page, size, true, null);
     }
 
     @DgsMutation
@@ -44,5 +44,10 @@ public record ProductDataFetcher(ProductService service) {
     @DgsMutation
     public Product deleteProduct(@InputArgument UUID id) {
         return service.delete(id);
+    }
+
+    @DgsMutation
+    public Product restoreProduct(@InputArgument UUID id) {
+        return service.restore(id);
     }
 }
