@@ -10,7 +10,7 @@ public sealed interface OrderEvent {
         int productsAmount
     ) implements OrderEvent {}
 
-    record Deleted(
+    record Cancelled(
         UUID id,
         UUID userId
     ) implements OrderEvent {}
