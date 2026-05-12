@@ -5,3 +5,4 @@ include ':api:product-api'
 
 include ':service:user-service'
 include ':service:product-service'
+include ':event:order-events-contract'
