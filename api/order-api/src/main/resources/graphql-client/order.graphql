@@ -1,0 +1,67 @@
+scalar DateTime
+scalar BigDecimal
+scalar Long
+
+type PageInfo {
+    pageNumber: Int!
+    pageSize: Int!
+    totalPages: Int!
+    last: Boolean!
+}
+
+type Order {
+    id: ID!
+    userId: ID!
+    timestamp: DateTime!
+    status: OrderStatus!
+    items: [Item!]!
+    totalPrice: BigDecimal!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+}
+
+type Item {
+    id: ID!
+    productId: ID!
+    amount: Int!
+}
+
+enum OrderStatus {
+    CREATED
+    DELIVERED
+    CANCELLED
+    RECEIVED
+    ON_THE_WAY
+    COLLECTED
+}
+
+type OrderCollection {
+    content: [Order!]!
+    pageInfo: PageInfo!
+    totalElements: Long!
+}
+
+input CreateOrder {
+    userId: ID!
+    items: [ID!]!
+}
+
+input UpdateStatus {
+    orderId: ID!
+    newStatus: OrderStatus!
+}
+
+input CancelOrder {
+    orderId: ID!
+}
+
+type Query {
+    order(id: ID!): Order
+    orders(userId: ID, page: Int = 0, size: Int = 20): OrderCollection
+}
+
+type Mutation {
+    createOrder(input: CreateOrder!): Order!
+    updateStatus(input: UpdateStatus!): Order!
+    cancelOrder(input: CancelOrder!): Order!
+}
