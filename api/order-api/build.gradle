@@ -34,7 +34,7 @@ dependencyManagement {
 }
 
 generateJava {
-    schemaPaths = ["${projectDir}/src/main/resources/graphql-client"]
+    schemaPaths = ["${projectDir}/src/main/resources/schema"]
     packageName = 'org.strawberries.orderapi.codegen'
     generateClient = true
     typeMapping = [

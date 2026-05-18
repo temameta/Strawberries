@@ -24,7 +24,7 @@ type Order {
 type Item {
     id: ID!
     productId: ID!
-    amount: Int!
+    productAmount: Int!
 }
 
 enum OrderStatus {
@@ -42,10 +42,16 @@ type OrderCollection {
     totalElements: Long!
 }
 
+input CreateItem {
+    productId: ID!
+    productAmount: Int!
+}
+
 input CreateOrder {
     userId: ID!
-    items: [ID!]!
+    items: [CreateItem!]!
     address: String!
+    totalPrice: BigDecimal!
 }
 
 input UpdateStatus {
@@ -58,8 +64,8 @@ input CancelOrder {
 }
 
 type Query {
-    order(id: ID!): Order
-    orders(userId: ID, page: Int = 0, size: Int = 20): OrderCollection
+    order(id: ID!): Order!
+    orders(page: Int = 0, size: Int = 20): OrderCollection
 }
 
 type Mutation {
