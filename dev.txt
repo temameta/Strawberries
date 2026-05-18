@@ -1,3 +1,4 @@
 docker run --name products-bd-dev -p 5433:5432 -e POSTGRES_USER=products-db-username -e POSTGRES_PASSWORD=products-db-password -e POSTGRES_DB=product-service -d postgres:18.3
+docker run --name orders-bd-dev -p 5434:5432 -e POSTGRES_USER=orders-db-username -e POSTGRES_PASSWORD=orders-db-password -e POSTGRES_DB=order-service -d postgres:18.3
 
 docker run -d --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:4-management
