@@ -15,7 +15,6 @@ public interface OrderMapper {
     @Mapping(target = "items", ignore = true)
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "timestamp", ignore = true)
-    @Mapping(target = "totalPrice", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     OrderEntity toEntityFromCreate(CreateOrder input);
