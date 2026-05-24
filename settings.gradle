@@ -7,6 +7,8 @@ include ':api:order-api'
 include ':service:user-service'
 include ':service:product-service'
 include ':service:order-service'
+include ':service:cart-service'
 
 include ':event:order-events-contract'
 include ':api:cart-api'
+include ':api:cart-rpc'

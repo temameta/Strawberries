@@ -1,0 +1,22 @@
+syntax = "proto3";
+option java_package = "org.strawberries.grpc";
+option java_multiple_files = true;
+package cart;
+
+message CartResponse {
+  string totalPrice = 1;
+  repeated CartItem items = 2;
+  message CartItem {
+    string productId = 1;
+    int32 quantity = 2;
+    string priceWithDiscount = 3;
+  }
+}
+
+message CartRequest {
+  string userId = 1;
+}
+
+service CartService {
+  rpc GetCart(CartRequest) returns (CartResponse);
+}
