@@ -9,3 +9,4 @@ include ':service:product-service'
 include ':service:order-service'
 
 include ':event:order-events-contract'
+include ':api:cart-api'
