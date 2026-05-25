@@ -19,4 +19,8 @@ public interface ProductService {
     Product delete(UUID id);
 
     Product restore(UUID id);
+
+    void increaseQuantity(UUID id, int quantity);
+
+    void decreaseQuantity(UUID id, int quantity);
 }

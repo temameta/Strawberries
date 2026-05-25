@@ -59,9 +59,14 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public Product findById(UUID id, boolean onlyActive) {
+        return mapper.toGqlType(getProduct(id, onlyActive));
+    }
+
+    @Transactional(readOnly = true)
+    protected ProductEntity getProduct(UUID id, boolean onlyActive) {
         Optional<ProductEntity> product = onlyActive ? repository.findByIdAndActiveTrue(id) : repository.findById(id);
         if (product.isEmpty()) throw new NoSuchElementException(String.format("Product with id %s not found", id));
-        return mapper.toGqlType(product.get());
+        return product.get();
     }
 
     @Override
@@ -92,5 +97,19 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new NoSuchElementException(String.format("Product with id %s not found", id)));
         product.setActive(true);
         return mapper.toGqlType(repository.save(product));
+    }
+
+    @Transactional
+    public void increaseQuantity(UUID id, int quantity) {
+        ProductEntity product = getProduct(id, true);
+        product.setQuantity(product.getQuantity() + quantity);
+        repository.save(product);
+    }
+
+    @Transactional
+    public void decreaseQuantity(UUID id, int quantity) {
+        ProductEntity product = getProduct(id, true);
+        product.setQuantity(Math.max(product.getQuantity() - quantity, 0));
+        repository.save(product);
     }
 }
