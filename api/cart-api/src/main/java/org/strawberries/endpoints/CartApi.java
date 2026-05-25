@@ -21,6 +21,20 @@ import java.util.UUID;
 @RequestMapping(value = "/api/cart", produces = MediaType.APPLICATION_JSON_VALUE)
 public interface CartApi {
     @Operation(
+            summary = "Создать корзину для пользователя",
+            description = "Создает новую пустую корзину для указанного пользователя",
+            security = @SecurityRequirement(name = CartApiContractConfig.SECURITY_SCHEME_BEARER)
+    )
+    @ApiResponse(responseCode = "200", description = "Корзина создана")
+    @ApiResponse(responseCode = "400", description = "Ошибка валидации запроса", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @ApiResponse(responseCode = "404", description = "Пользователь не найден", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
+    @PostMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    CartResponse createNew(
+            @Parameter(description = "ID пользователя", required = true, example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
+            @PathVariable UUID userId
+    );
+
+    @Operation(
             summary = "Добавить товар в корзину",
             description = "Добавляет указанный товар в корзину пользователя",
             security = @SecurityRequirement(name = CartApiContractConfig.SECURITY_SCHEME_BEARER)
