@@ -1,0 +1,18 @@
+syntax = "proto3";
+option java_package = "org.strawberries.grpc";
+option java_multiple_files = true;
+package cart;
+
+message GetPriceRequest {
+  string productId = 1;
+}
+
+message GetPriceResponse {
+  string productId = 1;
+  string price = 2;
+  int32 discount = 3;
+}
+
+service GetPriceService {
+  rpc GetPrice(GetPriceRequest) returns (GetPriceResponse);
+}
