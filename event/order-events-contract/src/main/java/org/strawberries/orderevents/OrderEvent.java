@@ -1,5 +1,6 @@
 package org.strawberries.orderevents;
 
+import java.util.List;
 import java.util.UUID;
 
 public sealed interface OrderEvent {
@@ -7,11 +8,12 @@ public sealed interface OrderEvent {
         UUID id,
         UUID userId,
         String address,
-        int productsAmount
+        List<Item> items
     ) implements OrderEvent {}
 
     record Cancelled(
         UUID id,
-        UUID userId
+        UUID userId,
+        List<Item> items
     ) implements OrderEvent {}
 }
