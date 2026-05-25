@@ -9,9 +9,9 @@ public final class RoutingKeys {
 
     // Routing keys для событий заказов
     public static final String ORDER_CREATED = "order.created";
-    public static final String ORDER_CANCELLED = "order.deleted";
+    public static final String ORDER_CANCELLED = "order.cancelled";
 
     // Паттерны для подписки (wildcard)
-    public static final String ALL_ORDER_EVENTS = "book.*";
+    public static final String ALL_ORDER_EVENTS = "order.*";
     public static final String ALL_EVENTS = "#";
 }
