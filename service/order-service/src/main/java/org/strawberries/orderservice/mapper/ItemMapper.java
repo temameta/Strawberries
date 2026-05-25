@@ -13,4 +13,6 @@ public interface ItemMapper {
 
     @Mapping(target = "id", ignore = true)
     ItemEntity toEntityFromCreate(CreateItem input);
+
+    org.strawberries.orderevents.Item toEventItem(ItemEntity entity);
 }
