@@ -11,6 +11,7 @@ import org.strawberries.orderapi.codegen.types.*;
 import org.strawberries.orderservice.entity.OrderEntity;
 import org.strawberries.orderservice.mapper.ItemMapper;
 import org.strawberries.orderservice.mapper.OrderMapper;
+import org.strawberries.orderservice.publisher.OrderPublisher;
 import org.strawberries.orderservice.repository.OrderRepository;
 
 import java.time.OffsetDateTime;
@@ -25,6 +26,7 @@ public class OrderService {
     private final OrderRepository repository;
     private final OrderMapper mapper;
     private final ItemMapper itemMapper;
+    private final OrderPublisher publisher;
 
     @Transactional
     public Order createOrder(CreateOrder input) {
@@ -34,6 +36,7 @@ public class OrderService {
         newOrder.setItems(input.getItems().stream()
                 .map(itemMapper::toEntityFromCreate)
                 .toList());
+        publisher.publishCreated(newOrder);
         return mapper.toGqlType(repository.save(newOrder));
     }
 
@@ -48,6 +51,7 @@ public class OrderService {
     public Order cancelOrder(CancelOrder input) {
         OrderEntity orderEntity = getOrder(input.getOrderId());
         orderEntity.setStatus(OrderStatus.CANCELLED);
+        publisher.publishCancelled(orderEntity);
         return mapper.toGqlType(repository.save(orderEntity));
     }
 

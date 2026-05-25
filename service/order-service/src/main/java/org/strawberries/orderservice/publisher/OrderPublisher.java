@@ -8,6 +8,8 @@ import org.strawberries.orderapi.codegen.types.Order;
 import org.strawberries.orderevents.EventEnvelope;
 import org.strawberries.orderevents.OrderEvent;
 import org.strawberries.orderevents.RoutingKeys;
+import org.strawberries.orderservice.entity.OrderEntity;
+import org.strawberries.orderservice.mapper.ItemMapper;
 
 @Component
 @RequiredArgsConstructor
@@ -15,18 +17,26 @@ import org.strawberries.orderevents.RoutingKeys;
 public class OrderPublisher {
     private final RabbitTemplate rabbitTemplate;
     private final String SOURCE = this.getClass().getPackageName();
+    private final ItemMapper itemMapper;
 
-    public void publishCreated(Order order) {
+    public void publishCreated(OrderEntity order) {
         send(RoutingKeys.ORDER_CREATED, new OrderEvent.Created(
                 order.getId(),
                 order.getUserId(),
                 order.getAddress(),
-                order.getItems().size()
+                order.getItems().stream()
+                        .map(itemMapper::toEventItem)
+                        .toList()
         ));
     }
 
-    public void publishCancelled(Order order) {
-        send(RoutingKeys.ORDER_CANCELLED, new OrderEvent.Cancelled(order.getId(), order.getUserId()));
+    public void publishCancelled(OrderEntity order) {
+        send(RoutingKeys.ORDER_CANCELLED, new OrderEvent.Cancelled(
+                order.getId(),
+                order.getUserId(),
+                order.getItems().stream()
+                        .map(itemMapper::toEventItem)
+                        .toList()));
     }
 
     private void send(String routingKey, OrderEvent event) {
@@ -35,7 +45,7 @@ public class OrderPublisher {
             rabbitTemplate.convertAndSend(RoutingKeys.EXCHANGE, routingKey, envelope);
             log.info("Событие отправлено: {} [eventId={}]", routingKey, envelope.metadata().eventId());
         } catch (Exception e) {
-            log.error("Не удалось отправить событие {}: {}", routingKey, e.getMessage());
+            log.error("Не удалось отправить событие {}: {}", routingKey, e.getStackTrace());
         }
     }
 }
