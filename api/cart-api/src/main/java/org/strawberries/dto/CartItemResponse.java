@@ -7,9 +7,6 @@ import java.util.UUID;
 
 @Schema(description = "Товар в корзине")
 public record CartItemResponse(
-        @Schema(description = "ID позиции в корзине", example = "b5cc5a7e-1b2f-4c3d-9e4a-fc1234567890")
-        UUID itemId,
-
         @Schema(description = "ID товара", example = "a3bb189e-8bf9-3888-9912-ace4e6543002")
         UUID productId,
 
