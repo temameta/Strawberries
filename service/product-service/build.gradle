@@ -24,6 +24,7 @@ ext {
 
 dependencies {
     implementation project(':api:product-api')
+    implementation project(':event:order-events-contract')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
@@ -33,6 +34,8 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.2'
     implementation 'org.mapstruct:mapstruct:1.6.3'
     implementation 'com.graphql-java:graphql-java-extended-scalars:24.0'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.postgresql:postgresql'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
