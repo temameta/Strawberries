@@ -28,7 +28,7 @@ public interface CartApi {
     @ApiResponse(responseCode = "200", description = "Корзина создана")
     @ApiResponse(responseCode = "400", description = "Ошибка валидации запроса", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
     @ApiResponse(responseCode = "404", description = "Пользователь не найден", content = @Content(schema = @Schema(implementation = ErrorResponse.class)))
-    @PostMapping(value = "/{userId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{userId}")
     CartResponse createNew(
             @Parameter(description = "ID пользователя", required = true, example = "d290f1ee-6c54-4b01-90e6-d701748f0851")
             @PathVariable UUID userId
