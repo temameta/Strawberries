@@ -10,7 +10,6 @@ import org.strawberries.dto.CartResponse;
 @Component
 @Mapper(componentModel = MappingConstants.ComponentModel.SPRING, uses = {CartItemMapper.class})
 public interface CartMapper {
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "updatedAt", ignore = true)
+
     CartResponse toRestResponse(UserCart entity);
 }
