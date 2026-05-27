@@ -1,6 +1,7 @@
 package org.strawberries.cartservice.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.jspecify.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import java.util.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
     private final CartRepository repository;
     private final CartItemMapper cartItemMapper;
@@ -48,6 +50,7 @@ public class CartService {
     public CartResponse addItem(AddItemRequest request) {
         UserCart cart = getUserCart(request.userId());
         List<CartItem> items = cart.getItems();
+        if (items == null) items = new ArrayList<>();
         CartItem newItem = cartItemMapper.toEntityFromRestCreate(request);
 
         GetPriceRequest getPriceRequest = GetPriceRequest.newBuilder()
@@ -57,14 +60,19 @@ public class CartService {
         GetPriceResponse getPriceResponse = getPriceStub.getPrice(getPriceRequest);
 
         BigDecimal price = new BigDecimal(getPriceResponse.getPrice());
-        BigDecimal discountAmount = price.multiply(BigDecimal.valueOf(getPriceResponse.getDiscount()).divide(BigDecimal.valueOf(100)));
-        BigDecimal priceWithDiscount = price.subtract(discountAmount);
+        BigDecimal priceWithDiscount;
+        if (getPriceResponse.getDiscount() != 0) {
+            BigDecimal discountAmount = price.multiply(BigDecimal.valueOf(getPriceResponse.getDiscount()).divide(BigDecimal.valueOf(100)));
+            priceWithDiscount = price.subtract(discountAmount);
+        } else priceWithDiscount = price;
 
         newItem.setProductPrice(price);
         newItem.setDiscount(getPriceResponse.getDiscount());
         newItem.setPriceWithDiscount(priceWithDiscount);
 
         items.add(newItem);
+        cart.setItems(items);
+        cart.recalculateTotalPrice();
         return cartMapper.toRestResponse(repository.save(cart));
     }
 
@@ -73,6 +81,7 @@ public class CartService {
         List<CartItem> items = cart.getItems();
         if (items.isEmpty()) throw new EmptyCartException(request.userId());
         cart.setItems(items.stream().filter(item -> !item.getProductId().equals(request.productId())).toList());
+        cart.recalculateTotalPrice();
         return cartMapper.toRestResponse(repository.save(cart));
     }
 

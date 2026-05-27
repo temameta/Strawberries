@@ -26,4 +26,11 @@ public class UserCart {
     OffsetDateTime createdAt;
     @LastModifiedDate
     OffsetDateTime updatedAt;
+
+    public void recalculateTotalPrice() {
+        if (items == null || items.isEmpty()) return;
+        items.forEach(i -> {
+            totalPrice = totalPrice.add(i.priceWithDiscount.multiply(BigDecimal.valueOf(i.quantity)));
+        });
+    }
 }
