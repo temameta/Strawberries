@@ -24,6 +24,8 @@ public class ProductEntity extends AuditableEntity {
     @Column(nullable = false)
     private BigDecimal price;
     @Column(nullable = false)
+    private int discount;
+    @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
     private boolean active;
