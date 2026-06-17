@@ -6,6 +6,7 @@ include ':api:product-rpc'
 include ':api:order-api'
 include ':api:cart-api'
 include ':api:cart-rpc'
+include ':api:product-rpc'
 
 include ':service:user-service'
 include ':service:product-service'
